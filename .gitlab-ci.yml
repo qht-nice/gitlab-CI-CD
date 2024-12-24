@@ -1,0 +1,51 @@
+variables:
+   DOCKER_IMAGE: ${REGISTRY_URL}/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}_${CI_COMMIT_SHORT_SHA}
+stages:
+    - buildandpush
+    - deploy
+    - checklog
+    
+buildandpush:
+    stage: buildandpush
+    variables:
+        GIT_STRATEGY: clone
+    before_script: 
+        - docker login -u ${REGISTRY_USER} -p ${REGISTRY_PASSWORD}
+    script:
+        - docker build -t $DOCKER_IMAGE .
+        - docker push $DOCKER_IMAGE
+    tags:
+        - ubuntu-server
+    only:
+        - tags
+
+# deploy:
+#     stage: deploy
+#     variables:
+#         GIT_STRATEGY: none
+#     script:
+#         - sudo cp target/$projectname-$version.jar $projectpath
+#         - sudo chown -R $projectuser. $projectpath
+#         - sudo su $projectuser -c " kill -9 $(ps -ef|grep $projectname-$version.jar|grep -v grep| awk '{print $2}')"
+#         - sudo su $projectuser -c "cd $projectpath; nohup java -jar target/$projectname-$version.jar > nohup.out 2>&1 &"          
+#     tags:
+#         - ubuntu-server
+#     only:
+#         - tags
+
+# showlog:
+#     stage: checklog
+#     variables:
+#         GIT_STRATEGY: none
+#     script:
+#         - sudo su $projectuser -c "cd $projectpath; tail -n 1000 nohup.out"          
+#     tags:
+#         - ubuntu-server
+#     only:
+#         - tags  
+
+
+
+
+
+
