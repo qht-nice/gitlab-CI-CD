@@ -1,10 +1,10 @@
 # Shoe-Shopping-Cart-Sample online
 Gitlab pipeline status
+![GitLab Pipeline](gitlab_pipeline.png)
 
-![image](gitlab pipeline.png)
 
 Jenkins pipeline status
-![image](jenkins pipeline.png)
+![Jenkins Pipeline](jenkins_pipeline.png)
 
 
 
